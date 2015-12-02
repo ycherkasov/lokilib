@@ -1,7 +1,7 @@
 #ifdef __INTEL_COMPILER
 # pragma warning(disable: 111 193 304 383 444 488 981 1418)
 #elif defined(_MSC_VER) && !defined(__MWERKS__)
-# pragma warning(disable: 4018 4097 4100 4213 4290 4512 4514 4700 4702 4710 4786 4800)
+# pragma warning(disable: 4018 4097 4100 4213 4290 4512 4514 4700 4702 4710 4786 4800 4996)
 #endif
 
 // Some platforms might have difficulty with this

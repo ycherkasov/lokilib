@@ -10,7 +10,7 @@
 
 #include "SmallObj.h"
 #include "TypeManip.h"
-#include "static_check.h"
+#include "StaticCheck.h"
 #include <functional>
 #include <stdexcept>
 #include <cassert>

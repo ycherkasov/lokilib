@@ -10,8 +10,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 add_executable(${TARGET} ${SOURCES})
 
-target_link_libraries(${TARGET} loki)
+target_link_libraries(${TARGET} lokilib)
 
-add_dependencies(${TARGET} loki)
+add_dependencies(${TARGET} lokilib)
 
 add_test(NAME loki_test COMMAND ${TARGET})

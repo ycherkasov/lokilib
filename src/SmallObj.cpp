@@ -16,7 +16,7 @@ void FixedAllocator::Chunk::Init(std::size_t blockSize, unsigned char blocks)
     assert(blocks > 0);
     // Overflow check
     assert((blockSize * blocks) / blockSize == blocks);
-    
+
     pData_ = new unsigned char[blockSize * blocks];
     Reset(blockSize, blocks);
 }
@@ -62,15 +62,15 @@ void FixedAllocator::Chunk::Release()
 void* FixedAllocator::Chunk::Allocate(std::size_t blockSize)
 {
     if (!blocksAvailable_) return 0;
-    
-    assert((firstAvailableBlock_ * blockSize) / blockSize == 
+
+    assert((firstAvailableBlock_ * blockSize) / blockSize ==
         firstAvailableBlock_);
 
     unsigned char* pResult =
         pData_ + (firstAvailableBlock_ * blockSize);
     firstAvailableBlock_ = *pResult;
     --blocksAvailable_;
-    
+
     return pResult;
 }
 
@@ -102,18 +102,18 @@ void FixedAllocator::Chunk::Deallocate(void* p, std::size_t blockSize)
 ////////////////////////////////////////////////////////////////////////////////
 
 FixedAllocator::FixedAllocator(std::size_t blockSize)
-    : blockSize_(blockSize)
-    , allocChunk_(0)
-    , deallocChunk_(0)
+: blockSize_(blockSize)
+, allocChunk_(0)
+, deallocChunk_(0)
 {
     assert(blockSize_ > 0);
-    
+
     prev_ = next_ = this;
 
     std::size_t numBlocks = DEFAULT_CHUNK_SIZE / blockSize;
     if (numBlocks > UCHAR_MAX) numBlocks = UCHAR_MAX;
     else if (numBlocks == 0) numBlocks = 8 * blockSize;
-    
+
     numBlocks_ = static_cast<unsigned char>(numBlocks);
     assert(numBlocks_ == numBlocks);
 }
@@ -124,15 +124,15 @@ FixedAllocator::FixedAllocator(std::size_t blockSize)
 ////////////////////////////////////////////////////////////////////////////////
 
 FixedAllocator::FixedAllocator(const FixedAllocator& rhs)
-    : blockSize_(rhs.blockSize_)
-    , numBlocks_(rhs.numBlocks_)
-    , chunks_(rhs.chunks_)
+: blockSize_(rhs.blockSize_)
+, numBlocks_(rhs.numBlocks_)
+, chunks_(rhs.chunks_)
 {
     prev_ = &rhs;
     next_ = rhs.next_;
     rhs.next_->prev_ = this;
     rhs.next_ = this;
-    
+
     allocChunk_ = rhs.allocChunk_
         ? &chunks_.front() + (rhs.allocChunk_ - &rhs.chunks_.front())
         : 0;
@@ -161,13 +161,13 @@ FixedAllocator::~FixedAllocator()
         next_->prev_ = prev_;
         return;
     }
-    
+
     assert(prev_ == next_);
     Chunks::iterator i = chunks_.begin();
     for (; i != chunks_.end(); ++i)
     {
-       assert(i->blocksAvailable_ == numBlocks_);
-       i->Release();
+        assert(i->blocksAvailable_ == numBlocks_);
+        i->Release();
     }
 }
 
@@ -178,7 +178,7 @@ FixedAllocator::~FixedAllocator()
 void FixedAllocator::Swap(FixedAllocator& rhs)
 {
     using namespace std;
-    
+
     swap(blockSize_, rhs.blockSize_);
     swap(numBlocks_, rhs.numBlocks_);
     chunks_.swap(rhs.chunks_);
@@ -218,7 +218,7 @@ void* FixedAllocator::Allocate()
     }
     assert(allocChunk_ != 0);
     assert(allocChunk_->blocksAvailable_ > 0);
-    
+
     return allocChunk_->Allocate(blockSize_);
 }
 
@@ -233,8 +233,8 @@ void FixedAllocator::Deallocate(void* p)
     assert(!chunks_.empty());
     assert(&chunks_.front() <= deallocChunk_);
     assert(&chunks_.back() >= deallocChunk_);
-    
-    deallocChunk_  = VicinityFind(p);
+
+    deallocChunk_ = VicinityFind(p);
     assert(deallocChunk_);
 
     DoDeallocate(p);
@@ -256,9 +256,9 @@ FixedAllocator::Chunk* FixedAllocator::VicinityFind(void* p)
     Chunk* hi = deallocChunk_ + 1;
     Chunk* loBound = &chunks_.front();
     Chunk* hiBound = &chunks_.back() + 1;
-	
-	// Special case: deallocChunk_ is the last in the array
-	if (hi == hiBound) hi = 0;
+
+    // Special case: deallocChunk_ is the last in the array
+    if (hi == hiBound) hi = 0;
 
     for (;;)
     {
@@ -271,7 +271,7 @@ FixedAllocator::Chunk* FixedAllocator::VicinityFind(void* p)
             if (lo == loBound) lo = 0;
             else --lo;
         }
-        
+
         if (hi)
         {
             if (p >= hi->pData_ && p < hi->pData_ + chunkLength)
@@ -301,14 +301,14 @@ void FixedAllocator::DoDeallocate(void* p)
     if (deallocChunk_->blocksAvailable_ == numBlocks_)
     {
         // deallocChunk_ is completely free, should we release it? 
-        
+
         Chunk& lastChunk = chunks_.back();
-        
+
         if (&lastChunk == deallocChunk_)
         {
             // check if we have two last chunks empty
-            
-            if (chunks_.size() > 1 && 
+
+            if (chunks_.size() > 1 &&
                 deallocChunk_[-1].blocksAvailable_ == numBlocks_)
             {
                 // Two free chunks, discard the last one
@@ -318,7 +318,7 @@ void FixedAllocator::DoDeallocate(void* p)
             }
             return;
         }
-        
+
         if (lastChunk.blocksAvailable_ == numBlocks_)
         {
             // Two free blocks, discard one
@@ -342,24 +342,24 @@ void FixedAllocator::DoDeallocate(void* p)
 ////////////////////////////////////////////////////////////////////////////////
 
 SmallObjAllocator::SmallObjAllocator(
-        std::size_t chunkSize, 
-        std::size_t maxObjectSize)
+    std::size_t chunkSize,
+    std::size_t maxObjectSize)
     : pLastAlloc_(0), pLastDealloc_(0)
-    , chunkSize_(chunkSize), maxObjectSize_(maxObjectSize) 
-{   
+    , chunkSize_(chunkSize), maxObjectSize_(maxObjectSize)
+{
 }
 
 namespace { // anoymous 
 
-// See LWG DR #270
-struct CompareFixedAllocatorSize
-    : std::binary_function<const FixedAllocator &, std::size_t, bool>
-{
-    bool operator()(const FixedAllocator &x, std::size_t numBytes) const
+    // See LWG DR #270
+    struct CompareFixedAllocatorSize
+        : std::binary_function<const FixedAllocator &, std::size_t, bool>
     {
-        return x.BlockSize() < numBytes;
-    }
-};
+        bool operator()(const FixedAllocator &x, std::size_t numBytes) const
+        {
+            return x.BlockSize() < numBytes;
+        }
+    };
 
 } // anoymous namespace
 
@@ -372,13 +372,13 @@ struct CompareFixedAllocatorSize
 void* SmallObjAllocator::Allocate(std::size_t numBytes)
 {
     if (numBytes > maxObjectSize_) return operator new(numBytes);
-    
+
     if (pLastAlloc_ && pLastAlloc_->BlockSize() == numBytes)
     {
         return pLastAlloc_->Allocate();
     }
-    Pool::iterator i = std::lower_bound(pool_.begin(), pool_.end(), numBytes, 
-                                        CompareFixedAllocatorSize());
+    Pool::iterator i = std::lower_bound(pool_.begin(), pool_.end(), numBytes,
+        CompareFixedAllocatorSize());
     if (i == pool_.end() || i->BlockSize() != numBytes)
     {
         i = pool_.insert(i, FixedAllocator(numBytes));
@@ -403,8 +403,8 @@ void SmallObjAllocator::Deallocate(void* p, std::size_t numBytes)
         pLastDealloc_->Deallocate(p);
         return;
     }
-    Pool::iterator i = std::lower_bound(pool_.begin(), pool_.end(), numBytes, 
-                                        CompareFixedAllocatorSize());
+    Pool::iterator i = std::lower_bound(pool_.begin(), pool_.end(), numBytes,
+        CompareFixedAllocatorSize());
     assert(i != pool_.end());
     assert(i->BlockSize() == numBytes);
     pLastDealloc_ = &*i;

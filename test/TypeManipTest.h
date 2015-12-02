@@ -40,8 +40,6 @@ public:
       Conversion<char,char>::exists2Way &&
       Conversion<char,char>::sameType &&
       Conversion<void,void>::exists &&
-      !Conversion<void,char>::exists &&
-      Conversion<char,void>::exists &&
       Conversion<Derived2,Base>::exists &&
       Conversion<Derived1,Base>::exists &&
       Conversion<Base,Base>::exists &&

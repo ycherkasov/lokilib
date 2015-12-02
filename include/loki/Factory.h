@@ -1,20 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
-// The Loki Library
-// Copyright (c) 2001 by Andrei Alexandrescu
-// This code accompanies the book:
-// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design 
-//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
-// Permission to use, copy, modify, distribute and sell this software for any 
-//     purpose is hereby granted without fee, provided that the above copyright 
-//     notice appear in all copies and that both that copyright notice and this 
-//     permission notice appear in supporting documentation.
-// The author or Addison-Wesley Longman make no representations about the 
-//     suitability of this software for any purpose. It is provided "as is" 
-//     without express or implied warranty.
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef FACTORY_INC_
-#define FACTORY_INC_
+#pragma once
 
 #include "LokiTypeInfo.h"
 #include "AssocVector.h"
@@ -132,14 +116,3 @@ namespace Loki
     };
 } // namespace Loki
 
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// June 20,    2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-// May 08,     2002: replaced const_iterator with iterator so that self-modifying
-//                   ProductCreators are supported. Also, added a throw()
-//                   spec to what(). Credit due to Jason Fischl.
-// February 2, 2003: fixed dependent names - credit due to Rani Sharoni
-// March 4, 2003: fixed dependent names - credit due to Ruslan Zasukhin and CW 8.3 
-////////////////////////////////////////////////////////////////////////////////
-
-#endif // FACTORY_INC_

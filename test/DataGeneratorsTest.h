@@ -1,9 +1,4 @@
-//DataGeneratorsTest.h
-
-
-#ifndef DATAGENERATORSTEST_H
-#define DATAGENERATORSTEST_H
-
+#pragma once
 #include <typeinfo>
 #include <loki/DataGenerators.h>
 
@@ -59,4 +54,3 @@ struct DataGeneratorsTest : public Test
     }
   } datageneratorsTest;
 
-#endif //DATAGENERATORSTEST_H

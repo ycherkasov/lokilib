@@ -1,23 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
-// The Loki Library
-// Copyright (c) 2001 by Andrei Alexandrescu
-// This code accompanies the book:
-// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design 
-//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
-// Permission to use, copy, modify, distribute and sell this software for any 
-//     purpose is hereby granted without fee, provided that the above copyright 
-//     notice appear in all copies and that both that copyright notice and this 
-//     permission notice appear in supporting documentation.
-// The author or Addison-Welsey Longman make no representations about the 
-//     suitability of this software for any purpose. It is provided "as is" 
-//     without express or implied warranty.
-////////////////////////////////////////////////////////////////////////////////
-
-// Last update: October 10, 2002
-//Reference
-
-#ifndef TYPELIST_INC_
-#define TYPELIST_INC_
+#pragma once
 
 #include "NullType.h"
 #include "TypeManip.h"
@@ -779,24 +760,3 @@ namespace Loki
     }   // namespace TL
 }   // namespace Loki
 
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// June 09, 2001: Fix bug in parameter list of macros TYPELIST_23 to TYPELIST_27
-//      (credit due to Dave Taylor)
-// June 20, 2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-// November 22, 2001: fixed bug in DerivedToFront
-//      (credit due to Gianni Luciani who noticed the bug first;
-//          Adam Wilkshire;
-//          Friedrik Hedman who fixed the bug but didn't send the fix;
-//          Kevin Cline who sent the first actual fix)
-// May 13, 2002: TYPELIST_46 called TYPELIST_45 with only 44 parameters.
-//      Credit due to Robert Minsk     
-// September 16, 2002: Changed MostDerived to use the new SuperSubclass template
-//     (rather than the SUPERSUBCLASS macro).
-//     Minor fix in Reverse, adding support for empty lists, like all the other
-//     algorithms.
-//     Fixed DerivedToFront, to use Replace, rather than ReplaceAll. T.S.
-// Oct  10, 2002: added MakeTypelist (SGB/MKH)
-////////////////////////////////////////////////////////////////////////////////
-
-#endif // TYPELIST_INC_

@@ -1,20 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// Unit Test for Loki
-//
-// Copyright Terje Slettebø and Pavel Vozenilek 2002.
-//
-// Permission to use, copy, modify, and distribute this software for any
-// purpose is hereby granted without fee, provided that this copyright and
-// permissions notice appear in all copies and derivatives.
-//
-// This software is provided "as is" without express or implied warranty.
-//
-// Last update: September 16, 2002
-///////////////////////////////////////////////////////////////////////////////
-
-#ifndef FACTORYTEST_H
-#define FACTORYTEST_H
-
+#pragma once
 #include <loki/Factory.h>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,19 +59,7 @@ namespace FactoryTestPrivate
     delete s;
     bool test3=s!=NULL;
 
-    bool test4=true;
-
-//    try
-//    {
-//      factory.CreateObject(4);
-//
-//      test4=false;
-//    }
-//    catch (std::exception&)
-//    {
-//    }
-
-    return test1 && test2 && test3 && test4;
+    return test1 && test2 && test3;
   }
 
   typedef Loki::CloneFactory<Shape> CloneFactoryType;
@@ -143,4 +115,3 @@ public:
     }
 } factoryTest;
 
-#endif

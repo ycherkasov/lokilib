@@ -1,19 +1,12 @@
-#ifndef THREADS_H_
-#define THREADS_H_
-
-////////////////////////////////////////////////////////////////////////////////
-// macro DEFAULT_THREADING
-// Selects the default threading model for certain components of Loki
-// If you don't define it, it defaults to single-threaded
-// All classes in Loki have configurable threading model; DEFAULT_THREADING
-// affects only default template arguments
-////////////////////////////////////////////////////////////////////////////////
-
-// Last update: June 20, 2001
+#pragma once
 
 #ifndef DEFAULT_THREADING
 #define DEFAULT_THREADING /**/ ::Loki::SingleThreaded
 #endif
+
+#ifdef _WIN32
+#include <Windows.h>
+#endif // _WIN32
 
 namespace Loki
 {
@@ -62,7 +55,7 @@ namespace Loki
         { lval = val; }
     };
     
-#ifdef _WINDOWS_
+#ifdef _WIN32
 
 ////////////////////////////////////////////////////////////////////////////////
 // class template ObjectLevelLockable
@@ -191,9 +184,3 @@ namespace Loki
 #endif    
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// June 20, 2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-////////////////////////////////////////////////////////////////////////////////
-
-#endif

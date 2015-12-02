@@ -1,19 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
-// The Loki Library
-// Data Generator by Shannon Barber
-// This code DOES NOT accompany the book:
-// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design 
-//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
-//
-// Code covered by the MIT License
-// The author makes no representations about the suitability of this software
-//  for any purpose. It is provided "as is" without express or implied warranty.
-////////////////////////////////////////////////////////////////////////////////
-
-// Last update: Oct 10, 2002
-
-#ifndef DATAGENERATORS_H
-#define DATAGENERATORS_H
+#pragma once
 #include "Typelist.h"
 
 //Reference version
@@ -108,9 +93,3 @@ namespace Loki
 	}//ns TL
 }//ns Loki
 
-#endif //DATAGENERATORS_H
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// 9/20/02 Named changed from GenData to IterateTypes
-// 10/8/02 insertion iterators are passed-by-value, not by-reference (oops)
-////////////////////////////////////////////////////////////////////////////////

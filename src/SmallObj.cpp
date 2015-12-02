@@ -1,21 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
-// The Loki Library
-// Copyright (c) 2001 by Andrei Alexandrescu
-// This code accompanies the book:
-// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design 
-//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
-// Permission to use, copy, modify, distribute and sell this software for any 
-//     purpose is hereby granted without fee, provided that the above copyright 
-//     notice appear in all copies and that both that copyright notice and this 
-//     permission notice appear in supporting documentation.
-// The author or Addison-Wesley Longman make no representations about the 
-//     suitability of this software for any purpose. It is provided "as is" 
-//     without express or implied warranty.
-////////////////////////////////////////////////////////////////////////////////
-
-// Last update: March 20, 2001
-
-#include "SmallObj.h"
+#include <loki/SmallObj.h>
 #include <cassert>
 #include <algorithm>
 #include <functional>
@@ -427,11 +410,3 @@ void SmallObjAllocator::Deallocate(void* p, std::size_t numBytes)
     pLastDealloc_ = &*i;
     pLastDealloc_->Deallocate(p);
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// March 20: fix exception safety issue in FixedAllocator::Allocate 
-//     (thanks to Chris Udazvinis for pointing that out)
-// June 20, 2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-// Aug 02, 2002: Fix in VicinityFind sent by Pavel Vozenilek
-////////////////////////////////////////////////////////////////////////////////

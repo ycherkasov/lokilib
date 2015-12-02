@@ -1,21 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
-// The Loki Library
-// Copyright (c) 2001 by Andrei Alexandrescu
-// This code accompanies the book:
-// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design 
-//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
-// Permission to use, copy, modify, distribute and sell this software for any 
-//     purpose is hereby granted without fee, provided that the above copyright 
-//     notice appear in all copies and that both that copyright notice and this 
-//     permission notice appear in supporting documentation.
-// The author or Addison-Wesley Longman make no representations about the 
-//     suitability of this software for any purpose. It is provided "as is" 
-//     without express or implied warranty.
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef SMARTPTR_INC_
-#define SMARTPTR_INC_
-
+#pragma once
 ////////////////////////////////////////////////////////////////////////////////
 // IMPORTANT NOTE
 // Due to threading issues, the OwnershipPolicy has been changed as follows:
@@ -1230,19 +1213,3 @@ namespace std
     };
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// June 20,     2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-// December 09, 2001: Included <cassert>
-// February 2,  2003: fixed dependent names - credit due to Rani Sharoni
-// August   21, 2003: Added support for policy based explicit/implicit constructor.
-//  The new code will be effective if a macro named 
-//  *** LOKI_SMARTPTR_CONVERSION_CONSTRUCTOR_POLICY ***
-//  is defined (due to backward computability concerns).
-//  In case that the macro is defined and the conversion policy allow flag is off 
-//  (e.g. DisallowConversion) then the conversion from the "pointer" to the 
-//  SmartPtr must be explicit.
-
-////////////////////////////////////////////////////////////////////////////////
-
-#endif // SMARTPTR_INC_

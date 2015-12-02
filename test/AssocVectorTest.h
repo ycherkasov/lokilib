@@ -1,22 +1,8 @@
-///////////////////////////////////////////////////////////////////////////////
-// Unit Test for Loki
-//
-// Copyright Terje Slettebø and Pavel Vozenilek 2002.
-//
-// Permission to use, copy, modify, and distribute this software for any
-// purpose is hereby granted without fee, provided that this copyright and
-// permissions notice appear in all copies and derivatives.
-//
-// This software is provided "as is" without express or implied warranty.
-//
-// Last update: September 16, 2002
-///////////////////////////////////////////////////////////////////////////////
-
-#ifndef ASSOCVECTORTEST_H
-#define ASSOCVECTORTEST_H
+#pragma once
 
 #include <cstdio>
 #include <cstdlib>
+#include <sstream>
 #include <loki/AssocVector.h>
 #include "UnitTest.h"
 
@@ -291,9 +277,9 @@ void test_vect3()
     C_Namespace::srand(111);
     // a stress test
     for (unsigned i = 0; i < 2 * 1000; ++i) {
-        char buffer[17];
-        C_Namespace::sprintf(buffer, "string%d", C_Namespace::rand());
-        std::string s(buffer);
+        std::ostringstream ss;
+        ss << "string" << C_Namespace::rand();
+        std::string s(ss.str());
         vec31.insert(std::make_pair(s, s));
     }
 }
@@ -371,4 +357,3 @@ public:
     }
 } assocVectorTest;
 
-#endif

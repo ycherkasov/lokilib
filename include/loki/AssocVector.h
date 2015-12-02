@@ -1,21 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
-// The Loki Library
-// Copyright (c) 2001 by Andrei Alexandrescu
-// This code accompanies the book:
-// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design 
-//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
-// Permission to use, copy, modify, distribute and sell this software for any 
-//     purpose is hereby granted without fee, provided that the above copyright 
-//     notice appear in all copies and that both that copyright notice and this 
-//     permission notice appear in supporting documentation.
-// The author or Addison-Wesley Longman make no representations about the 
-//     suitability of this software for any purpose. It is provided "as is" 
-//     without express or implied warranty.
-////////////////////////////////////////////////////////////////////////////////
-
-#ifndef ASSOCVECTOR_INC_
-#define ASSOCVECTOR_INC_
-
+#pragma once
 #include <algorithm>
 #include <functional>
 #include <vector>
@@ -322,15 +305,3 @@ namespace Loki
     
 } // namespace Loki
 
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// May 20,     2001: change operator= - credit due to Cristoph Koegl
-// June 11,    2001: remove paren in equal_range - credit due to Cristoph Koegl
-// June 20,    2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-// January 22, 2002: fixed operator= - credit due to Tom Hyer
-// June 25,    2002: fixed template insert() - credit due to Robert Minsk
-// June 27,    2002: fixed member swap() - credit due to David Brookman
-// February 2, 2003: fixed dependent names - credit due to Rani Sharoni
-////////////////////////////////////////////////////////////////////////////////
-
-#endif // ASSOCVECTOR_INC_

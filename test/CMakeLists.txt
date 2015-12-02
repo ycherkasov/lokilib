@@ -1,5 +1,9 @@
 set(TARGET loki_test)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "../bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "../bin")
+
 file(GLOB SOURCES *.cpp *.h)
  
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)

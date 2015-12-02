@@ -1,5 +1,4 @@
-#ifndef TYPETRAITS_INC_
-#define TYPETRAITS_INC_
+#pragma once
 
 #include "Typelist.h"
 
@@ -242,11 +241,3 @@ namespace Loki
     };
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Change log:
-// June 20, 2001: ported by Nick Thurn to gcc 2.95.3. Kudos, Nick!!!
-// September 16, 2002: ParameterType fixed, as TypeTraits<void> made
-//     ParameterType give error about reference to void. T.S.
-////////////////////////////////////////////////////////////////////////////////
-
-#endif // TYPETRAITS_INC_

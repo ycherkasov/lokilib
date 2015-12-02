@@ -10,11 +10,11 @@
 
 namespace Loki
 {
-////////////////////////////////////////////////////////////////////////////////
-// class template SingleThreaded
-// Implementation of the ThreadingModel policy used by various classes
-// Implements a single-threaded model; no synchronization
-////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    // class template SingleThreaded
+    // Implementation of the ThreadingModel policy used by various classes
+    // Implements a single-threaded model; no synchronization
+    ////////////////////////////////////////////////////////////////////////////////
 
     template <class Host>
     class SingleThreaded
@@ -25,43 +25,59 @@ namespace Loki
             Lock() {}
             explicit Lock(const SingleThreaded&) {}
         };
-        
+
         typedef Host VolatileType;
 
-        typedef int IntType; 
+        typedef int IntType;
 
         static IntType AtomicAdd(volatile IntType& lval, IntType val)
-        { return lval += val; }
-        
+        {
+            return lval += val;
+        }
+
         static IntType AtomicSubtract(volatile IntType& lval, IntType val)
-        { return lval -= val; }
+        {
+            return lval -= val;
+        }
 
         static IntType AtomicMultiply(volatile IntType& lval, IntType val)
-        { return lval *= val; }
-        
+        {
+            return lval *= val;
+        }
+
         static IntType AtomicDivide(volatile IntType& lval, IntType val)
-        { return lval /= val; }
-        
+        {
+            return lval /= val;
+        }
+
         static IntType AtomicIncrement(volatile IntType& lval)
-        { return ++lval; }
-        
+        {
+            return ++lval;
+        }
+
         static IntType AtomicDecrement(volatile IntType& lval)
-        { return --lval; }
-        
+        {
+            return --lval;
+        }
+
         static void AtomicAssign(volatile IntType & lval, IntType val)
-        { lval = val; }
-        
+        {
+            lval = val;
+        }
+
         static void AtomicAssign(IntType & lval, volatile IntType & val)
-        { lval = val; }
+        {
+            lval = val;
+        }
     };
-    
+
 #ifdef _WIN32
 
-////////////////////////////////////////////////////////////////////////////////
-// class template ObjectLevelLockable
-// Implementation of the ThreadingModel policy used by various classes
-// Implements a object-level locking scheme
-////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    // class template ObjectLevelLockable
+    // Implementation of the ThreadingModel policy used by various classes
+    // Implements a object-level locking scheme
+    ////////////////////////////////////////////////////////////////////////////////
 
     template <class Host>
     class ObjectLevelLockable
@@ -81,11 +97,11 @@ namespace Loki
 
         class Lock;
         friend class Lock;
-        
+
         class Lock
         {
             ObjectLevelLockable const& host_;
-            
+
             Lock(const Lock&);
             Lock& operator=(const Lock&);
         public:
@@ -103,26 +119,34 @@ namespace Loki
 
         typedef volatile Host VolatileType;
 
-        typedef LONG IntType; 
+        typedef LONG IntType;
 
         static IntType AtomicIncrement(volatile IntType& lval)
-        { return InterlockedIncrement(&const_cast<IntType&>(lval)); }
-        
+        {
+            return InterlockedIncrement(&const_cast<IntType&>(lval));
+        }
+
         static IntType AtomicDecrement(volatile IntType& lval)
-        { return InterlockedDecrement(&const_cast<IntType&>(lval)); }
-        
+        {
+            return InterlockedDecrement(&const_cast<IntType&>(lval));
+        }
+
         static void AtomicAssign(volatile IntType& lval, IntType val)
-        { InterlockedExchange(&const_cast<IntType&>(lval), val); }
-        
+        {
+            InterlockedExchange(&const_cast<IntType&>(lval), val);
+        }
+
         static void AtomicAssign(IntType& lval, volatile IntType& val)
-        { InterlockedExchange(&lval, val); }
+        {
+            InterlockedExchange(&lval, val);
+        }
     };
-    
+
     template <class Host>
     class ClassLevelLockable
     {
         struct Initializer
-        {   
+        {
             CRITICAL_SECTION mtx_;
 
             Initializer()
@@ -134,13 +158,13 @@ namespace Loki
                 ::DeleteCriticalSection(&mtx_);
             }
         };
-        
+
         static Initializer initializer_;
 
     public:
         class Lock;
         friend class Lock;
-        
+
         class Lock
         {
             Lock(const Lock&);
@@ -162,25 +186,32 @@ namespace Loki
 
         typedef volatile Host VolatileType;
 
-        typedef LONG IntType; 
+        typedef LONG IntType;
 
         static IntType AtomicIncrement(volatile IntType& lval)
-        { return InterlockedIncrement(&const_cast<IntType&>(lval)); }
-        
-        static IntType AtomicDecrement(volatile IntType& lval)
-        { return InterlockedDecrement(&const_cast<IntType&>(lval)); }
-        
-        static void AtomicAssign(volatile IntType& lval, IntType val)
-        { InterlockedExchange(&const_cast<IntType&>(lval), val); }
-        
-        static void AtomicAssign(IntType& lval, volatile IntType& val)
-        { InterlockedExchange(&lval, val); }
-    };
-    
-    template <class Host>
-    typename ClassLevelLockable<Host>::Initializer 
-    ClassLevelLockable<Host>::initializer_;
-    
-#endif    
-}
+        {
+            return InterlockedIncrement(&const_cast<IntType&>(lval));
+        }
 
+        static IntType AtomicDecrement(volatile IntType& lval)
+        {
+            return InterlockedDecrement(&const_cast<IntType&>(lval));
+        }
+
+        static void AtomicAssign(volatile IntType& lval, IntType val)
+        {
+            InterlockedExchange(&const_cast<IntType&>(lval), val);
+        }
+
+        static void AtomicAssign(IntType& lval, volatile IntType& val)
+        {
+            InterlockedExchange(&lval, val);
+        }
+    };
+
+    template <class Host>
+    typename ClassLevelLockable<Host>::Initializer
+        ClassLevelLockable<Host>::initializer_;
+
+#endif
+}

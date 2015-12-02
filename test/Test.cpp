@@ -16,7 +16,7 @@ Test::tests_type Test::tests;
 // Merely comment out any of the following headers to
 // prevent thier execution during the test.
 //
-// A pluggable-factory-like method is used to 
+// A pluggable-factory-like method is used to
 // auto-register the test, so all that is needed
 // is the header inclusion to execute the correspond
 // unit test.
@@ -34,8 +34,42 @@ Test::tests_type Test::tests;
 #include "DataGeneratorsTest.h"
 
 
+struct small_class1 : public Loki::SmallObject<>
+{
+    int i = 0;
+};
+
+struct small_class2 : public Loki::SmallObject<>
+{
+    int i = 0;
+    int j = 1;
+};
+
+struct small_class3 : public small_class2
+{
+    int i1 = 2;
+    int j1 = 3;
+};
+
+void test_allocation()
+{
+
+    std::vector<small_class1*> small_classes1;
+    std::vector<small_class2*> small_classes2;
+
+    for (size_t i = 0; i < 2; ++i){
+        small_class1* s1 = new small_class1;
+        small_classes1.push_back(s1);
+    }
+
+    for (size_t i = 0; i < 2; ++i){
+        delete small_classes1[i];
+    }
+}
+
 int main()
 {
+    test_allocation();
 
     int result = Test::run("Loki Unit Test");
 

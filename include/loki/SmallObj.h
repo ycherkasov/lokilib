@@ -36,11 +36,11 @@ namespace Loki
                 blocksAvailable_;
         };
 
-        // Internal functions        
+        // Internal functions
         void DoDeallocate(void* p);
         Chunk* VicinityFind(void* p);
 
-        // Data 
+        // Data
         std::size_t blockSize_;
         unsigned char numBlocks_;
         typedef std::vector<Chunk> Chunks;
@@ -62,9 +62,11 @@ namespace Loki
 
         // Allocate a memory block
         void* Allocate();
+
         // Deallocate a memory block previously allocated with Allocate()
         // (if that's not the case, the behavior is undefined)
         void Deallocate(void* p);
+
         // Returns the block size with which the FixedAllocator was initialized
         std::size_t BlockSize() const
         {
@@ -123,10 +125,6 @@ namespace Loki
             : SmallObjAllocator(chunkSize, maxSmallObjectSize)
             {}
         };
-        // The typedef below would make things much simpler, 
-        //     but MWCW won't like it
-        // typedef SingletonHolder<MySmallObjAllocator/*, CreateStatic, 
-        //        DefaultLifetime, ThreadingModel*/> MyAllocator;
 
     public:
         static void* operator new(std::size_t size)

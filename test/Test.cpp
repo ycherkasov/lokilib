@@ -58,24 +58,31 @@ void test_allocation()
     std::vector<small_class2*> small_classes2;
 
     for (size_t i = 0; i < 2; ++i){
+        std::cout << "Created size: " << sizeof(small_class1) << std::endl;
         small_class1* s1 = new small_class1;
         small_classes1.push_back(s1);
     }
 
     for (size_t i = 0; i < 2; ++i){
-        delete small_classes1[i];
+        small_class1* s1 = small_classes1[i];
+        delete s1;
     }
 }
 
+
+
 int main()
 {
+#if 0
     test_allocation();
+    return 0;
+#else
 
     int result = Test::run("Loki Unit Test");
-
 #if defined(__BORLANDC__) || defined(__GNUC__) || defined(_MSC_VER)
     system("pause"); // Stop console window from closing if run from IDE.
 #endif
-
     return result;
+
+#endif
 }

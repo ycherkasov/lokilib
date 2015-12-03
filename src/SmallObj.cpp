@@ -88,6 +88,7 @@ void FixedAllocator::Chunk::Deallocate(void* p, std::size_t blockSize)
     assert((toRelease - pData_) % blockSize == 0);
 
     *toRelease = firstAvailableBlock_;
+
     firstAvailableBlock_ = static_cast<unsigned char>(
         (toRelease - pData_) / blockSize);
     // Truncation check
